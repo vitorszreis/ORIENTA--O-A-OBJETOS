@@ -26,7 +26,7 @@ class ContaBancariaTest {
     }
 
     @Test
-    void setNumero_conta() {
+    void deveSetarNumeroConta() {
         ContaBancaria conta = new ContaBancaria(12345, 1000.0, "Vitor Reis");
         conta.setNumero_conta(67890);
         assertEquals(67890, conta.getNumero_conta());
