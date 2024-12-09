@@ -9,7 +9,6 @@ class LivroTest {
 
     private Livro livro;
 
-
     @BeforeEach
     void setUp() {
         livro = new Livro("Título de Teste", "Autor de Teste", 100);
@@ -18,14 +17,14 @@ class LivroTest {
     @Test
     void abrir() {
         livro.abrir();
-        assertTrue(livro.isAberto(), "O livro foi aberto");
+        assertTrue(livro.isAberto(), "O livro deveria estar aberto");
     }
 
     @Test
     void fechar() {
         livro.abrir();
         livro.fechar();
-        assertFalse(livro.isAberto(), "O livro foi fechado");
+        assertFalse(livro.isAberto(), "O livro deveria estar fechado");
     }
 
     @Test
@@ -37,6 +36,7 @@ class LivroTest {
 
     @Test
     void setPaginaAtualValida() {
+        livro.setNumero_paginas(100);
         livro.setPaginaAtual(75);
         assertEquals(75, livro.getPaginaAtual(), "A página atual deveria ser 75.");
     }
@@ -49,7 +49,7 @@ class LivroTest {
 
     @Test
     void avancarPagina() {
-        Livro livro = new Livro("Título", "Autor", 100); // Certifique-se de que o livro tem mais de 51 páginas
+        livro.setNumero_paginas(100);
         livro.setPaginaAtual(50);
         livro.avancarPagina();
         assertEquals(51, livro.getPaginaAtual(), "A página atual deveria avançar para 51.");
@@ -57,12 +57,14 @@ class LivroTest {
 
     @Test
     void avancarPaginaExcecao() {
+        livro.setNumero_paginas(100);
         livro.setPaginaAtual(100);
         assertThrows(IllegalArgumentException.class, () -> livro.avancarPagina(), "Deveria lançar exceção ao tentar avançar além da última página.");
     }
 
     @Test
     void retrocederPagina() {
+        livro.setNumero_paginas(100);
         livro.setPaginaAtual(50);
         livro.retrocederPagina();
         assertEquals(49, livro.getPaginaAtual(), "A página atual deveria retroceder para 49.");
@@ -70,7 +72,8 @@ class LivroTest {
 
     @Test
     void retrocederPaginaExcecao() {
+        livro.setNumero_paginas(100);
         livro.setPaginaAtual(1);
-        assertThrows(IllegalArgumentException.class, () -> livro.retrocederPagina(), "Deveria lançar exceção ao tentar retroceder antes da primeira página.");
+        assertThrows(IllegalStateException.class, () -> livro.retrocederPagina(), "Deveria lançar exceção ao tentar retroceder antes da primeira página.");
     }
 }

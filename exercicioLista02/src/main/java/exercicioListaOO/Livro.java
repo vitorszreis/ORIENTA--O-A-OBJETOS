@@ -10,12 +10,12 @@ public class Livro {
     private boolean aberto;
 
     public Livro(String titulo, String autor, int numeroPaginas) {
-             this.titulo = titulo;
-             this.autor = autor;
-             this.numero_paginas = getNumero_paginas();
-             this.paginaAtual = 1; // Começa na primeira página
-             this.aberto = false; // Começa fechado
-         }
+        this.titulo = titulo;
+        this.autor = autor;
+        this.numero_paginas = getNumero_paginas();
+        this.paginaAtual = 1; // Começa na primeira página
+        this.aberto = false; // Começa fechado
+    }
 
     public String getTitulo() {
         return titulo;
@@ -87,8 +87,14 @@ public class Livro {
         return paginaAtual;
     }
 
-    public void setPaginaAtual(int paginaAtual) {
-        this.paginaAtual = paginaAtual;
+    public void setPaginaAtual(int novaPagina) {
+        if (novaPagina <= 0) {
+            throw new IllegalArgumentException("A página atual deve ser maior que zero.");
+        }
+        if (novaPagina > this.numero_paginas) {
+            throw new IllegalArgumentException("A página atual não pode ser maior que o total de páginas do livro.");
+        }
+        this.paginaAtual = novaPagina;
     }
 
     public void avancarPagina() {
@@ -97,11 +103,13 @@ public class Livro {
         } else {
             throw new IllegalArgumentException("O número total de páginas já foi atingido");
         }
-
-    public void retrocederPagina() {
-        if (this.paginaAtual <= 1) {
-            throw new IllegalArgumentException("Você já está na primeira página e não pode retroceder.");
-        }
-        this.paginaAtual--;
     }
+
+        public void retrocederPagina () {
+            if (this.paginaAtual > 1) {
+                this.paginaAtual--;
+            } else {
+                throw new IllegalStateException("Você já está na primeira página e não pode retroceder.");
+            }
+        }
 }
